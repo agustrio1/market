@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import fetchProduct from "../../utils/api";
+import { useCart } from "../../context/CartContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,12 +31,16 @@ const ProductDetail = () => {
     fetchData();
   }, [id]);
 
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="p-4 rounded-lg shadow-lg-bg-white shadow-lg mx-auto max-w-[1200px]">
+    <div className="p-4 pt-32a rounded-lg shadow-lg-bg-white shadow-lg mx-auto max-w-[1200px]">
       <img
         src={product.image}
         alt={product.title}
@@ -45,6 +53,14 @@ const ProductDetail = () => {
         <p className="text-gray-800 font-bold mt-2">
           ${product.price.toFixed(2)}
         </p>
+        <button
+        onClick={handleAddToCart}
+        className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out"
+      >
+        <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
+        Add to Cart
+      </button>
+      <Link to="/cart" className="text-blue-500 ml-2">View Cart</Link>
       </div>
     </div>
   );

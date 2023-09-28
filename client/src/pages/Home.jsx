@@ -59,7 +59,7 @@ function Home() {
   };
 
   return (
-    <div className="pt-16 m:pt-8">
+    <div className="pt-24 m:pt-20">
       <SearchBar onSearch={handleSearch} />
       <Category
         categories={categories}
