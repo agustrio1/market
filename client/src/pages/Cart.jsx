@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-  const { cart, removeFromCart, incrementCartItem, decrementCartItem } = useCart();
-
-  // Fungsi untuk menyimpan keranjang ke local storage setiap kali ada perubahan
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }, [cart]);
+  const { cart, addToCart, removeFromCart, incrementCartItem, decrementCartItem } = useCart();
+  const navigate = useNavigate()
 
   const calculateTotalPrice = () => {
     return cart.reduce((total, product) => total + product.price * product.quantity, 0);
+  };
+
+  const handleCheckoutClick = () => {
+    navigate('/checkout')
   };
 
   return (
@@ -62,9 +63,12 @@ const Cart = () => {
           </ul>
           <div className="mt-8">
             <p className="text-lg font-semibold">Total: ${calculateTotalPrice().toFixed(2)}</p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out mt-4">
-              Checkout
-            </button>
+            <button
+        onClick={handleCheckoutClick}
+        className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out mt-4"
+      >
+        Checkout
+      </button>
           </div>
         </>
       )}

@@ -41,12 +41,12 @@ export const CartProvider = ({ children }) => {
     setCart((prevCart) => {
       return prevCart.map((item) => {
         if (item.id === productId) {
-          item.quantity += 1;
+          return { ...item, quantity: item.quantity + 1 };
         }
         return item;
       });
     });
-  }, []);
+  }, []);  
 
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);

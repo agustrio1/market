@@ -40,7 +40,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="p-4 pt-32a rounded-lg shadow-lg-bg-white shadow-lg mx-auto max-w-[1200px]">
+    <div className="p-4 pt-32 rounded-lg shadow-lg-bg-white shadow-lg mx-auto max-w-[1200px]">
       <img
         src={product.image}
         alt={product.title}
