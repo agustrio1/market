@@ -33,7 +33,7 @@ const Navbar = () => {
             </button>
             <div className={`origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg ${accountOpen ? 'block' : 'hidden'}`}>
               <div className="py-1 bg-white rounded-md">
-                <Link to="/popfile" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">Profile</Link>
+                <Link to="//profile" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">Profile</Link>
                 <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">Login</Link>
                 <Link to="/register" className="block px-4 py-2 text-gray-800 hover:bg-blue-100">Register</Link>
               </div>
