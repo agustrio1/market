@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { auth } from '../../firebase';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -90,9 +91,12 @@ const Profile = () => {
                 </button>
               </div>
             ) : (
-              <p className="text-xl font-semibold text-gray-800">
+              <>
+              <p className="text-xl font-semibold text-gray-800 mb-4">
                 Please log in to view your profile.
               </p>
+              <Link  className='bg-blue-600 text-white text-sm px-4 py-2 rounded-sm' to={'/login'}>Login</Link>
+              </>
             )}
           </div>
         </div>
