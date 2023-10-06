@@ -1,31 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { auth } from "../../firebase";
-import { signOut } from "firebase/auth";
-import { useAuth } from "../../context/AuthContext";
+import React, { useEffect, useState } from 'react';
+import { auth } from '../../firebase';
+
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const {currentUser} = useAuth()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      const unsubscribe = auth.onAuthStateChanged((authUser) => {
+        if (authUser) {
+          setUser(authUser);
+          localStorage.setItem('user', JSON.stringify(authUser));
+        } else {
+          setUser(null);
+        }
+      });
 
-      } else {
-        setUser(null);
-      }
-    });
-
-    return () => {
-      unsubscribe();
-    };
+      return () => {
+        unsubscribe();
+      };
+    }
   }, []);
 
   const handleLogout = async () => {
     try {
       await auth.signOut();
+      localStorage.removeItem('user');
+      setUser(null);
     } catch (error) {
-      console.error("Error logging out:", error);
+      console.error('Error logging out:', error);
     }
   };
 
@@ -41,34 +46,33 @@ const Profile = () => {
               <div className="flex flex-col space-y-4">
                 <div className="flex items-center space-x-2">
                   <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                    {currentUser.photoURL ? (
-
+                    {user.photoURL ? (
                       <img
-                      src={currentUser.photoURL}
-                      alt={`${user.displayName}'s profile`}
-                       className="w-10 h-10 rounded-full" 
-                       />
+                        src={user.photoURL}
+                        alt={`${user.displayName}'s profile`}
+                        className="w-10 h-10 rounded-full"
+                      />
                     ) : (
-                      
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-gray-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 4a4 4 0 110 8 4 4 0 010-8z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M20 10v2a7 7 0 01-14 0v-2m14 0a7 7 0 00-14 0m14 0c0 3.87-3.13 7-7 7s-7-3.13-7-7m14 0a7 7 0 0114 0z"
-                      />
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 text-gray-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 4a4 4 0 110 8 4 4 0 010-8z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M20 10v2a7 7 0 01-14 0v-2m14 0a7 7 0 00-14 0m14 0c0 3.87-3.13 7-7 7s-7-3.13-7-7m14 0a7 7 0 0114 0z"
+                        />
+                      </svg>
                     )}
                   </div>
                   <div className="text-lg font-semibold">
@@ -80,7 +84,8 @@ const Profile = () => {
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
+                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+                >
                   Logout
                 </button>
               </div>
