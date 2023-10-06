@@ -10,13 +10,13 @@ function SearchBar({ onSearch }) {
   };
 
   return (
-    <div className="mb-4 px-16">
+    <div className="mb-4 px-4 md:px-16 text-center">
       <input
         type="text"
         placeholder="Search products by name"
         value={searchTerm}
         onChange={handleChange}
-        className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500"
+        className="w-full md:w-1/2 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-blue-500"
       />
     </div>
   );

@@ -4,6 +4,7 @@ import fetchProductCategory from "../utils/category";
 import fetchProduct from "../utils/api";
 import Category from "../components/main/Category";
 import SearchBar from "../components/main/SearchBar";
+import CarouselImg from "../components/main/Carousel";
 
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -60,6 +61,7 @@ function Home() {
 
   return (
     <div className="pt-24 m:pt-20">
+      <CarouselImg />
       <SearchBar onSearch={handleSearch} />
       <Category
         categories={categories}

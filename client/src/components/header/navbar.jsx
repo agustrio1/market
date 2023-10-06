@@ -14,7 +14,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-700 p-4 shadow-lg fixed w-full">
+    <nav className="bg-blue-700 p-4 shadow-lg fixed w-full z-10">
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-white text-2xl font-bold">Kita store</Link>
         
