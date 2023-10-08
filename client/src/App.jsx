@@ -11,6 +11,7 @@ import Login from "./pages/accounts/Login";
 import Register from "./pages/accounts/Register";
 import AuthContextProvider from "./context/AuthContext";
 import Profile from "./pages/accounts/Profile";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         </Routes>
       </CartProvider>
       </AuthContextProvider>
+      <Footer />
     </Router>
   );
 }
