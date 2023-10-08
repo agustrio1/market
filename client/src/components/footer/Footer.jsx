@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
   return (
@@ -16,15 +18,17 @@ const Footer = () => {
           <li>
             <Link to={'/profile'} className="hover:text-gray-500">Your Profile</Link>
           </li>
-          <li>
-            <Link to={'/about'} className="hover:text-gray-500">About Us</Link>
-          </li>
-          <li>
-            <Link to={'/contact'} className="hover:text-gray-500">Contact Us</Link>
-          </li>
         </ul>
         <div className="text-center lg:text-left mt-4 lg:mt-0">
           <p className="text-sm">&copy; {new Date().getFullYear()} Toko Kita</p>
+          <div className="flex space-x-2 mt-2">
+            <a href="tel:+1234567890" className="text-white hover:text-gray-500">
+              <FontAwesomeIcon icon={faPhone} /> +1234567890
+            </a>
+            <a href="mailto:info@example.com" className="text-white hover:text-gray-500">
+              <FontAwesomeIcon icon={faEnvelope} /> info@example.com
+            </a>
+          </div>
         </div>
       </div>
     </div>
