@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({ selectedCategory, products }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [visibleProducts, setVisibleProducts] = useState(5);
+  const [isLoading, setIsLoading] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -15,9 +18,41 @@ const ProductCard = ({ selectedCategory, products }) => {
     }
   }, [selectedCategory, products]);
 
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isLoading) {
+          setIsLoading(true);
+          setTimeout(() => {
+            setVisibleProducts((prevVisible) =>
+              Math.min(prevVisible + 5, filteredProducts.length)
+            );
+            setIsLoading(false);
+          }, 500); // Anda dapat menyesuaikan waktu penundaan jika perlu
+        }
+      });
+    }, options);
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, [filteredProducts, isLoading]);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {filteredProducts.map((product) => (
+      {filteredProducts.slice(0, visibleProducts).map((product, index) => (
         <Link
           key={product.id}
           to={`/product/${product.id}`}
@@ -26,7 +61,7 @@ const ProductCard = ({ selectedCategory, products }) => {
           <img
             src={product.image}
             alt={product.title}
-            className="w-auto h-60 m-auto "
+            className="w-auto h-60 m-auto"
           />
           <div className="p-4">
             <h2 className="text-gray-800 text-xl font-semibold">
@@ -39,6 +74,7 @@ const ProductCard = ({ selectedCategory, products }) => {
           </div>
         </Link>
       ))}
+      <div ref={containerRef} />
     </div>
   );
 };
