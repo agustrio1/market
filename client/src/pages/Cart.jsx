@@ -3,10 +3,16 @@ import { useCart } from '../context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Cart = () => {
+  const {currentUser} = useAuth();
   const { cart, addToCart, removeFromCart, incrementCartItem, decrementCartItem } = useCart();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  if (!currentUser) {
+    navigate('/login')
+  }
 
   const calculateTotalPrice = () => {
     return cart.reduce((total, product) => total + product.price * product.quantity, 0);
