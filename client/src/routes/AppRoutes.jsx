@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Cart from "../pages/Cart";
@@ -10,16 +10,19 @@ import Profile from "../pages/accounts/Profile";
 import { auth } from "../firebase";
 
 const AppRoutes = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const unsubcribe = auth
-    .onAuthStateChanged(user => {
-      setIsAuthenticated(!!user)
-    })
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
 
-    return () => unsubcribe()
-  }, [])
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Routes>
@@ -27,14 +30,18 @@ const AppRoutes = () => {
       {isAuthenticated ? (
         <Route path="/cart/*" element={<Cart />} />
       ) : (
-        <Route path="/cart/*" element={
-          <Navigate to={'/login'} replace />}
-          />
+        <Route path="/cart/*" element={<Navigate to={"/login"} replace />} />
       )}
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/login"
+        element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
+      />
+      <Route
+        path="/register"
+        element={isAuthenticated ? <Navigate to="/" replace /> : <Register />}
+      />
       <Route path="/profile" element={<Profile />} />
     </Routes>
   );
