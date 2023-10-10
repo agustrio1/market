@@ -9,7 +9,10 @@ export const useAuth = () => {
 }
 
 export const AuthContextProvider = ({ children }) => { 
-    const [currentUser, setCurrentUser] = useState(null)
+    const [currentUser, setCurrentUser] = useState(() => {
+        const savedUser = localStorage.getItem("currentUser");
+        return savedUser ? JSON.parse(savedUser) : null;
+      });
     const auth = getAuth()
 
     useEffect(() => {
@@ -30,7 +33,10 @@ export const AuthContextProvider = ({ children }) => {
       
       const login = async (email, password) => {
         try {
-          await signInWithEmailAndPassword(auth, email, password);
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          setCurrentUser(user);
+          localStorage.setItem("currentUser", JSON.stringify(user));
         } catch (error) {
           alert("Login gagal: " + error.message);
         }
@@ -40,6 +46,10 @@ export const AuthContextProvider = ({ children }) => {
       const logout = async () => {
         try {
           await signOut(auth);
+          setCurrentUser(null);
+    
+          localStorage.removeItem("currentUser");
+    
           alert("Anda telah logout.");
         } catch (error) {
           alert("Logout gagal: " + error.message);
