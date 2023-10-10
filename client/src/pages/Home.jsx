@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ProductCard from "../components/main/ProductCard";
 import fetchProductCategory from "../utils/category";
 import fetchProduct from "../utils/api";
@@ -15,17 +15,17 @@ function Home() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const {addToCart} = useContext(CartContext);
-  const {currentUser} = useContext(AuthContext);
-  const navigate = useNavigate()
+  const { addToCart } = useContext(CartContext);
+  const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleAddToCart = (product) => {
     if (currentUser) {
-      addToCart(product)
+      addToCart(product);
     } else {
-      navigate('/login')
+      navigate("/login");
     }
-  }
+  };
 
   useEffect(() => {
     fetchProductCategory()
@@ -82,7 +82,11 @@ function Home() {
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategorySelect}
       />
-      <ProductCard selectedCategory={selectedCategory} products={filteredProducts} addToCart={handleAddToCart}/>
+      <ProductCard
+        selectedCategory={selectedCategory}
+        products={filteredProducts}
+        addToCart={handleAddToCart}
+      />
     </div>
   );
 }
