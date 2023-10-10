@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useCart } from '../context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, AuthContext } from '../context/AuthContext';
 
 const Cart = () => {
+  const isAuthenticated = useContext(AuthContext);
   const {currentUser} = useAuth();
   const { cart, addToCart, removeFromCart, incrementCartItem, decrementCartItem } = useCart();
   const navigate = useNavigate();
 
   if (!currentUser) {
     navigate('/login')
+    return null
   }
 
   const calculateTotalPrice = () => {
@@ -23,7 +25,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="p-4 pt-16 rounded-lg shadow-lg-bg-white shadow-lg mx-auto max-w-[1200px]">
+    <div className="p-4 pt-16 rounded-lg shadow-lg-bg-white shadow-lg mx-auto max-w-[1200px] min-h-screen mb-32">
       <h2 className="text-2xl font-semibold mb-4 pt-16">Shopping Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>

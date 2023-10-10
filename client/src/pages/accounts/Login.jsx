@@ -8,7 +8,6 @@ import {
 } from "firebase/auth";
 import { useAuth } from "../../context/AuthContext";
 
-
 const Login = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
@@ -47,33 +46,15 @@ const Login = () => {
       });
   };
 
-  // const handleEmailPasswordLogin = (e) => {
-  //   e.preventDefault();
-  //   const email = e.target.email.value;
-  //   const password = e.target.password.value;
-
-  //   const auth = getAuth()
-  //   signInWithEmailAndPassword(auth, email, password)
-  //   .then((result) => {
-  //     localStorage.setItem('user', JSON.stringify(result, user));
-  //     navigate('/profile');
-  //   })
-  //   .catch((err) =>{
-  //     alert('terjadi kesalahan')
-  //   })
-  // }
-
   return (
     <>
-      <main className="w-screen min-h-screen flex flex-col bg-gradient-to-tr from-blue-800 to-blue-500 max-w-[500px] mx-auto p-10">
+      <main className="w-screen min-h-screen flex flex-col bg-gradient-to-tr from-blue-800 to-blue-500 max-w-[500px] mx-auto p-10 pt-32">
         <form
           className="w-full bg-white flex flex-col gap-4 shadow-lg rounded-lg mt-8 p-6"
           autoComplete="off"
           onSubmit={handleSubmit}>
           <h1 className="text-xl text-blue-500 text-center">Login</h1>
-          {error && (
-          <p className="text-red-500 text-center">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-center">{error}</p>}
           <div className="flex flex-col gap-2">
             <label htmlFor="email">Email</label>
             <input

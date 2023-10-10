@@ -5,7 +5,7 @@ import { faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
   return (
-    <div className="bg-blue-700 text-white py-6 bottom-0">
+    <div className="bg-blue-700 text-white py-6">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         <div className="text-center lg:text-left mb-4 lg:mb-0">
           <h3 className="text-2xl font-semibold">Toko Kita</h3>

@@ -20,17 +20,32 @@ export const AuthContextProvider = ({ children }) => {
         return () => unSubscribe()
     }, [auth])
 
-    const register = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+    const register = async (email, password) => {
+        try {
+          await createUserWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          alert("Registrasi gagal: " + error.message);
+        }
+      }
+      
+      const login = async (email, password) => {
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          alert("Login gagal: " + error.message);
+        }
+      }
+      
 
-    const login = (email, password) => {
-        return signInWithEmailAndPassword(auth, email, password)
-    }
-
-    const logout = () => {
-        return signOut(auth)
-    }
+      const logout = async () => {
+        try {
+          await signOut(auth);
+          alert("Anda telah logout.");
+        } catch (error) {
+          alert("Logout gagal: " + error.message);
+        }
+      }
+      
 
     return (
         <AuthContext.Provider value={{ currentUser, register, login, logout }}>
