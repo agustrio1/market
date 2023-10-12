@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuth } from "../../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons"; // Import ikon Google
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -46,12 +48,12 @@ const Login = () => {
   return (
     <main className="w-screen min-h-screen flex flex-col bg-gradient-to-tr from-blue-800 to-blue-500 max-w-[500px] mx-auto p-10 pt-32">
       <form
-        className="w-full bg-white flex flex-col gap-4 shadow-lg rounded-lg mt-8 p-6"
+        className="w-full bg-white flex flex-col gap-4 shadow-lg rounded-lg p-6"
         autoComplete="off"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-xl text-blue-500 text-center">Login</h1>
-        {error && <p className="text-red-500 text-center">{error}</p>}
+        <h1 className="text-2xl text-blue-500 text-center mb-4">Login</h1>
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input
@@ -59,34 +61,36 @@ const Login = () => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-10 px-3 rounded-md border-[1px] border-gray-300"
+            className="input-field h-10 rounded-md border-[1px] border-gray-300"
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 relative">
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-10 px-3 rounded-md border-[1px] border-gray-300"
+            className="input-field h-10 rounded-md border-[1px] border-gray-300"
+          />
+          <FontAwesomeIcon
+            icon={showPassword ? faEye : faEyeSlash}
+            className="absolute top-3 right-3 cursor-pointer text-gray-500"
+            onClick={() => setShowPassword(!showPassword)}
           />
         </div>
-        <div className="mt-4 flex flex-col gap-2">
-          <button className="h-10 w-full bg-blue-500 text-white rounded lg">
+        <div className="flex flex-col gap-2">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
             Login
           </button>
           <button
-            className="h-10 w-full bg-yellow-500 text-white rounded lg"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
             type="button"
             onClick={handleGoogleLogin}
           >
             <FontAwesomeIcon icon={faGoogle} className="mr-2" /> Masuk dengan Google
           </button>
-          <Link
-            to={"/register"}
-            className="h-10 w-full bg-slate-500 text-white rounded lg flex justify-center items-center text-center"
-          >
+          <Link to={"/register"} className="bg-slate-500 hover:bg-slate-600 text-white text-center font-bold py-2 px-4 rounded">
             Register
           </Link>
         </div>
