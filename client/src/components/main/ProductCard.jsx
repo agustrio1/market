@@ -34,7 +34,7 @@ const ProductCard = ({ selectedCategory, products }) => {
               Math.min(prevVisible + 5, filteredProducts.length)
             );
             setIsLoading(false);
-          }, 500); // Anda dapat menyesuaikan waktu penundaan jika perlu
+          }, 500);
         }
       });
     }, options);
@@ -61,6 +61,7 @@ const ProductCard = ({ selectedCategory, products }) => {
           <img
             src={product.image}
             alt={product.title}
+            loading="lazy"
             className="w-auto h-60 m-auto"
           />
           <div className="p-4">
@@ -74,7 +75,9 @@ const ProductCard = ({ selectedCategory, products }) => {
           </div>
         </Link>
       ))}
-      <div ref={containerRef} />
+      {visibleProducts < filteredProducts.length && (
+        <div ref={containerRef} className="text-center font-bold"> Loading </div>
+      )}
     </div>
   );
 };
