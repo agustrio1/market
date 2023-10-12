@@ -51,12 +51,12 @@ const ProductCard = ({ selectedCategory, products }) => {
   }, [filteredProducts, isLoading]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
       {filteredProducts.slice(0, visibleProducts).map((product, index) => (
         <Link
           key={product.id}
           to={`/product/${product.id}`}
-          className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
+          className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
         >
           <img
             src={product.image}
@@ -76,7 +76,7 @@ const ProductCard = ({ selectedCategory, products }) => {
         </Link>
       ))}
       {visibleProducts < filteredProducts.length && (
-        <div ref={containerRef} className="text-center font-bold"> Loading </div>
+        <div ref={containerRef} className="text-center font-bold my-4"> Loading </div>
       )}
     </div>
   );
