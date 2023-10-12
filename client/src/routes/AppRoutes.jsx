@@ -33,7 +33,11 @@ const AppRoutes = () => {
         <Route path="/cart/*" element={<Navigate to={"/login"} replace />} />
       )}
       <Route path="/product/:id" element={<ProductDetail />} />
-      <Route path="/checkout" element={<Checkout />} />
+      {isAuthenticated ? (
+        <Route path="/checkout" element={<Checkout />} />
+      ) : (
+        <Route path="/checkout/*" element={<Navigate to={"/login"} replace />} />
+      )}
       <Route
         path="/login"
         element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
