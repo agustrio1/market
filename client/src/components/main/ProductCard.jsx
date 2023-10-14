@@ -56,7 +56,7 @@ const ProductCard = ({ selectedCategory, products }) => {
         <Link
           key={product.id}
           to={`/product/${product.id}`}
-          className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
+          className="bg-white shadow-lg rounded-lg border border-gray-300 overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
         >
           <img
             src={product.image}
