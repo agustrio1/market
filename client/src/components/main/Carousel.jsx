@@ -18,7 +18,7 @@ const CarouselImg = () => {
         infiniteLoop={true}
         autoPlay={true}
         interval={5000}
-        className="bg-white shadow-sm w-full sm:w-2/3 md:w-1/2 lg:w-1/3 mx-auto my-4"
+        className="bg-white shadow-sm w-full sm:w-2/3 md:w-1/2 lg:w-2/3 mx-auto my-4"
       >
         {carouselImg.map((image, index) => (
           <div key={index}>
