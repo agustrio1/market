@@ -11,7 +11,7 @@ const Footer = () => {
           <h3 className="text-2xl font-semibold">Toko Kita</h3>
           <p className="text-sm">Kami memberikan pelayanan terbaik untuk Anda.</p>
         </div>
-        <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 text-center lg:text-left">
+        <ul className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4 text-center lg:text-left">
           <li>
             <Link to={'/'} className="hover:text-gray-500">Home</Link>
           </li>
@@ -21,12 +21,12 @@ const Footer = () => {
         </ul>
         <div className="text-center lg:text-left mt-4 lg:mt-0">
           <p className="text-sm">&copy; {new Date().getFullYear()} Toko Kita</p>
-          <div className="flex space-x-2 mt-2">
-            <a href="tel:+1234567890" className="text-white hover:text-gray-500">
-              <FontAwesomeIcon icon={faPhone} /> +1234567890
+          <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4 mt-2">
+            <a href="tel:+1234567890" className="text-white hover:text-gray-500 flex items-center">
+              <FontAwesomeIcon icon={faPhone} className="mr-2" /> +1234567890
             </a>
-            <a href="mailto:info@example.com" className="text-white hover:text-gray-500">
-              <FontAwesomeIcon icon={faEnvelope} /> info@example.com
+            <a href="mailto:info@example.com" className="text-white hover:text-gray-500 flex items-center">
+              <FontAwesomeIcon icon={faEnvelope} className="mr-2" /> info@example.com
             </a>
           </div>
         </div>
