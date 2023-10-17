@@ -1,19 +1,23 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { auth } from '../../firebase';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from "react";
+import { auth } from "../../firebase";
+import { Link } from "react-router-dom";
+import { useWishlist } from "../../context/WishlistContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const { wishlist } = useWishlist();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
       const unsubscribe = auth.onAuthStateChanged((authUser) => {
         if (authUser) {
           setUser(authUser);
-          localStorage.setItem('user', JSON.stringify(authUser));
+          localStorage.setItem("user", JSON.stringify(authUser));
         } else {
           setUser(null);
         }
@@ -28,10 +32,10 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await auth.signOut();
-      localStorage.removeItem('user');
+      localStorage.removeItem("user");
       setUser(null);
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error("Error logging out:", error);
     }
   };
 
@@ -59,8 +63,7 @@ const Profile = () => {
                         className="h-6 w-6 text-gray-600"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
+                        stroke="currentColor">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -85,17 +88,59 @@ const Profile = () => {
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
-                >
+                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
                   Logout
                 </button>
+                    <h3 className="text-xl text-center font-semibold text-gray-800 mt-10 mb-4">
+                      Wishlist
+                    </h3>
+                {wishlist.length > 0 && (
+                  <div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                      {wishlist.map((product) => (
+                         <div
+                         key={product.id}
+                         className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105">
+                         <Link to={`/product/${product.id}`}>
+                           <img
+                             src={product.image}
+                             alt={product.title}
+                             loading="lazy"
+                             className="w-auto h-60 m-auto"
+                           />
+                         </Link>
+                          <div className="p-4 flex flex-col items-center">
+                            <h2 className="text-gray-800 text-xl font-semibold">
+                              {product.title}
+                            </h2>
+                            <p className="text-gray-600 mt-2">
+                              {product.category}
+                            </p>
+                            <p className="text-gray-800 font-bold mt-2">
+                              ${product.price.toFixed(2)}
+                            </p>
+                            <button
+                              onClick={() => removeFromWishlist(product.id)}
+                              className="text-red-500 cursor-pointer">
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <>
-              <p className="text-xl font-semibold text-gray-800 mb-4">
-                Please log in to view your profile.
-              </p>
-              <Link  className='bg-blue-600 text-white text-sm px-4 py-2 rounded-sm' to={'/login'}>Login</Link>
+                <p className="text-xl font-semibold text-gray-800 mb-4">
+                  Please log in to view your profile.
+                </p>
+                <Link
+                  className="bg-blue-600 text-white text-sm px-4 py-2 rounded-sm"
+                  to={"/login"}>
+                  Login
+                </Link>
               </>
             )}
           </div>

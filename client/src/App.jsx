@@ -5,6 +5,7 @@ import Footer from "./components/footer/Footer";
 import { CartProvider } from "./context/CartContext";
 import AuthContextProvider from "./context/AuthContext";
 import AppRoutes from "./routes/AppRoutes";
+import { WishlistProvider } from "./context/WishlistContext";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
       <Navbar />
       <AuthContextProvider>
         <CartProvider>
+          <WishlistProvider>
           <AppRoutes />
+          </WishlistProvider>
         </CartProvider>
       </AuthContextProvider>
       <Footer />

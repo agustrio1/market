@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ selectedCategory, products }) => {
+const ProductCard = ({ selectedCategory, products}) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState(5);
   const [isLoading, setIsLoading] = useState(false);

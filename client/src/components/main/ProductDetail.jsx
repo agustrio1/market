@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import fetchProduct from "../../utils/api";
 import { useCart } from "../../context/CartContext";
+import { useWishlist } from "../../context/WishlistContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart, faHeart as faHeartSolid, faHeart as faHeartOutline } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const { addToCart } = useCart();
+  const { isProductInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,17 +55,33 @@ const ProductDetail = () => {
         <p className="text-gray-800 font-bold mt-2">
           ${product.price.toFixed(2)}
         </p>
-        <button
-        onClick={handleAddToCart}
-        className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out"
-      >
-        <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
-        Add to Cart
-      </button>
-      <Link to="/cart" className="text-blue-500 ml-2">View Cart</Link>
+        <div className="flex items-center mt-4">
+          {isProductInWishlist(product.id) ? (
+            <FontAwesomeIcon
+              icon={faHeartSolid}
+              className="text-red-500 cursor-pointer mr-2"
+              onClick={() => removeFromWishlist(product.id)}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faHeartOutline}
+              className="text-gray-500 cursor-pointer mr-2"
+              onClick={() => addToWishlist(product)}
+            />
+          )}
+          <button
+            onClick={handleAddToCart}
+            className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition duration-300 ease-in-out"
+          >
+            <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
+            Add to Cart
+          </button>
+          <Link to="/cart" className="text-blue-500 ml-2">View Cart</Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ProductDetail;
+ 
