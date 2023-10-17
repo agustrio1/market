@@ -7,7 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const { wishlist } = useWishlist();
+  const { wishlist, removeFromWishlist } = useWishlist();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
