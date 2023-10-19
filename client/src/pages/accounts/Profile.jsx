@@ -29,10 +29,15 @@ const Profile = () => {
     }
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
   const handleLogout = async () => {
     try {
       await auth.signOut();
       localStorage.removeItem("user");
+      localStorage.removeItem("wishlist");
       setUser(null);
     } catch (error) {
       console.error("Error logging out:", error);
@@ -91,43 +96,41 @@ const Profile = () => {
                   className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
                   Logout
                 </button>
-                    <h3 className="text-xl text-center font-semibold text-gray-800 mt-10 mb-4">
-                      Wishlist
-                    </h3>
+                <h3 className="text-xl text-center font-semibold text-gray-800 mt-10 mb-4">
+                  Wishlist
+                </h3>
                 {wishlist.length > 0 && (
-                  <div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {wishlist.map((product) => (
-                         <div
-                         key={product.id}
-                         className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105">
-                         <Link to={`/product/${product.id}`}>
-                           <img
-                             src={product.image}
-                             alt={product.title}
-                             loading="lazy"
-                             className="w-auto h-60 m-auto"
-                           />
-                         </Link>
-                          <div className="p-4 flex flex-col items-center">
-                            <h2 className="text-gray-800 text-xl font-semibold">
-                              {product.title}
-                            </h2>
-                            <p className="text-gray-600 mt-2">
-                              {product.category}
-                            </p>
-                            <p className="text-gray-800 font-bold mt-2">
-                              ${product.price.toFixed(2)}
-                            </p>
-                            <button
-                              onClick={() => removeFromWishlist(product.id)}
-                              className="text-red-500 cursor-pointer">
-                              <FontAwesomeIcon icon={faTrash} />
-                            </button>
-                          </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+                    {wishlist.map((product) => (
+                      <div
+                        key={product.id}
+                        className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105">
+                        <Link to={`/product/${product.id}`}>
+                          <img
+                            src={product.image}
+                            alt={product.title}
+                            loading="lazy"
+                            className="w-full h-auto"
+                          />
+                        </Link>
+                        <div className="p-4">
+                          <h2 className="text-gray-800 text-xl font-semibold">
+                            {product.title}
+                          </h2>
+                          <p className="text-gray-600 mt-2">
+                            {product.category}
+                          </p>
+                          <p className="text-gray-800 font-bold mt-2">
+                            ${product.price.toFixed(2)}
+                          </p>
+                          <button
+                            onClick={() => removeFromWishlist(product.id)}
+                            className="text-red-500 cursor-pointer">
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
