@@ -62,7 +62,7 @@ const ProductCard = ({ selectedCategory, products}) => {
             src={product.image}
             alt={product.title}
             loading="lazy"
-            className="w-auto h-60 m-auto"
+            className="w-auto h-40 m-auto"
           />
           <div className="p-4">
             <h2 className="text-gray-800 text-xl font-semibold">

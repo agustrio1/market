@@ -100,29 +100,23 @@ const Profile = () => {
                   Wishlist
                 </h3>
                 {wishlist.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-3">
                     {wishlist.map((product) => (
                       <div
                         key={product.id}
-                        className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105">
+                        className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 mx-auto">
                         <Link to={`/product/${product.id}`}>
                           <img
                             src={product.image}
                             alt={product.title}
                             loading="lazy"
-                            className="w-full h-auto"
+                            className="w-40 h-40 rounded-full"
                           />
                         </Link>
                         <div className="p-4">
-                          <h2 className="text-gray-800 text-xl font-semibold">
+                          <h2 className="text-gray-800 text-md font-semibold">
                             {product.title}
                           </h2>
-                          <p className="text-gray-600 mt-2">
-                            {product.category}
-                          </p>
-                          <p className="text-gray-800 font-bold mt-2">
-                            ${product.price.toFixed(2)}
-                          </p>
                           <button
                             onClick={() => removeFromWishlist(product.id)}
                             className="text-red-500 cursor-pointer">

@@ -12,7 +12,7 @@ const CarouselImg = () => {
   return (
     <div className="relative z-0 mb-8">
       <Carousel
-        showArrows={true}
+        showArrows={false}
         showStatus={false}
         showThumbs={false}
         infiniteLoop={true}

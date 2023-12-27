@@ -9,10 +9,12 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+
   };
 
   const toggleAccountDropdown = () => {
     setAccountOpen(!accountOpen);
+
   };
 
   return (
@@ -42,7 +44,7 @@ const Navbar = () => {
               }`}>
               <div className="py-1 bg-white rounded-md">
                 <Link
-                  to="//profile"
+                  to="/profile"
                   className="block px-4 py-2 text-gray-800 hover:bg-blue-100">
                   Profile
                 </Link>
